@@ -1,0 +1,16 @@
+{
+    "name": "Yojoy.Tech.U3d.Core.Editor",
+    "references": [
+        "Yojoy.Tech.U3d.Core.Run",
+        "Yojoy.Tech.Common.Core.Run"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": []
+}

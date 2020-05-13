@@ -1,0 +1,17 @@
+{
+    "name": "Yojoy.Tech.U3d.Third.Odin.Editor",
+    "references": [
+        "Yojoy.Tech.U3d.Third.Odin.Run"
+    ],
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": []
+}
