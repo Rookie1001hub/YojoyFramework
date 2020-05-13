@@ -8,7 +8,7 @@
 namespace Sirenix.OdinInspector
 {
     using System;
-
+    using Yojoy.Tech.Common.Core.Run;
     /// <summary>
     /// <para>FoldoutGroup is used on any property, and organizes properties into a foldout.</para>
     /// <para>Use this to organize properties, and to allow the user to hide properties that are not relevant for them at the moment.</para>
@@ -67,7 +67,10 @@ namespace Sirenix.OdinInspector
             : base(groupName, order)
         {
         }
+        public FoldoutGroupAttribute(string englishGroupId,string chineseGroupId,int order = 0) : base(englishGroupId, chineseGroupId, order)
+        {
 
+        }
         /// <summary>
         /// Adds the property to the specified foldout group.
         /// </summary>

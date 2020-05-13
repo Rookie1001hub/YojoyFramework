@@ -10,7 +10,7 @@ using Yojoy.Tech.U3d.Core.Editor;
 
 namespace Yojoy.Tech.U3d.Odin.Editor
 {
-    public class AbstractMenuWindow : OdinMenuEditorWindow
+    public abstract class AbstractMenuWindow : OdinMenuEditorWindow
     {
         #region Switch Menu
         private Type currentMenuType;

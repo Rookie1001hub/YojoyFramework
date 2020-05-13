@@ -8,7 +8,7 @@
 namespace Sirenix.OdinInspector
 {
     using System;
-
+    using Yojoy.Tech.Common.Core.Run;
     /// <summary>
     /// <para>LabelText is used to change the labels of properties.</para>
     /// <para>Use this if you want a different label than the name of the property.</para>
@@ -34,18 +34,23 @@ namespace Sirenix.OdinInspector
     [AttributeUsage(AttributeTargets.All, AllowMultiple = false, Inherited = true)]
     public class LabelTextAttribute : Attribute
     {
+        private MultiLanguageString multiLanguageString;
         /// <summary>
         /// The new text of the label.
         /// </summary>
-        public string Text;
+        public string Text
+        {
+            get => multiLanguageString.Text;
+            private set => multiLanguageString = MultiLanguageString.Create(englishValue: value, chinesValue: value);
+        }
 
         /// <summary>
         /// Give a property a custom label.
         /// </summary>
         /// <param name="text">The new text of the label.</param>
-        public LabelTextAttribute(string text)
+        public LabelTextAttribute(string english,string chinese=null)
         {
-            this.Text = text;
+            multiLanguageString = MultiLanguageString.Create(english, chinese);
         }
     }
 }

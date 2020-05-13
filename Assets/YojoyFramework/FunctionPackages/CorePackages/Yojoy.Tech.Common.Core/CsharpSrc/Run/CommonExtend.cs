@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 namespace Yojoy.Tech.Common.Core.Run
 {
@@ -32,6 +33,24 @@ namespace Yojoy.Tech.Common.Core.Run
         {
             var result = (TEnum)Enum.Parse(typeof(TEnum), str);
             return result;
+        }
+        #endregion
+        #region Relection
+        public static List<ATTR> GetAttributes<ATTR>(this Type type) where ATTR:Attribute
+        {
+            var attributes = type.GetCustomAttributes(typeof(ATTR), true).
+                Select(t=>(ATTR)t).ToList();
+            return attributes;
+        }
+        public static ATTR GetSingleAttribute<ATTR>(this Type type) where ATTR : Attribute
+        {
+            var attributes = type.GetAttributes<ATTR>();
+            if (attributes.Count > 1)
+            {
+                throw new Exception(message: "The number of target" + typeof(ATTR).Name + "is greater than 1!");
+            }
+            var attribute = attributes.FirstOrDefault();
+            return attribute;
         }
         #endregion
     }

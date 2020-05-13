@@ -8,7 +8,7 @@
 namespace Sirenix.OdinInspector
 {
     using System;
-
+    using Yojoy.Tech.Common.Core.Run;
     /// <summary>
     /// <para>Buttons are used on functions, and allows for clickable buttons in the inspector.</para>
     /// </summary>
@@ -56,6 +56,7 @@ namespace Sirenix.OdinInspector
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = false)]
     public class ButtonAttribute : ShowInInspectorAttribute
     {
+        private MultiLanguageString multiLanguageString;
         /// <summary>
         /// Gets the height of the button. If it's zero or below then use default.
         /// </summary>
@@ -64,7 +65,12 @@ namespace Sirenix.OdinInspector
         /// <summary>
         /// Use this to override the label on the button.
         /// </summary>
-        public string Name;
+        public string Name
+        {
+            get => multiLanguageString.Text;
+            private set=> multiLanguageString = MultiLanguageString.Create(value, value);
+            
+        }
 
         /// <summary>
         /// The style
@@ -125,7 +131,16 @@ namespace Sirenix.OdinInspector
             this.Name = name;
             this.ButtonHeight = (int)buttonSize;
         }
-
+        public ButtonAttribute(string english,string chinese)
+        {
+            multiLanguageString = MultiLanguageString.Create(english, chinese);
+            ButtonHeight = (int)ButtonSizes.Small;
+        }
+        public ButtonAttribute(string english, string chinese,ButtonSizes buttonSizes)
+        {
+            multiLanguageString = MultiLanguageString.Create(english, chinese);
+            ButtonHeight = (int)buttonSizes;
+        }
         /// <summary>
         /// Creates a button in the inspector with a custom name.
         /// </summary>

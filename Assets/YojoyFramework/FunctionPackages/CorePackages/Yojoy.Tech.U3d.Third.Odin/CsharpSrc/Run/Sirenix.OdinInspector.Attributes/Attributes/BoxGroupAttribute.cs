@@ -113,7 +113,11 @@ namespace Sirenix.OdinInspector
             this.ShowLabel = showLabel;
             this.CenterLabel = centerLabel;
         }
-
+        public BoxGroupAttribute(string englishGroupId,string chineseGroupId,bool showLabel=true, bool centerLabel = false, int order = 0) : base(englishGroupId, chineseGroupId, order)
+        {
+            ShowLabel = showLabel;
+            CenterLabel = centerLabel;
+        }
         /// <summary>
         /// Initializes a new instance of the <see cref="BoxGroupAttribute"/> class. Use the other constructor overloads in order to show a header-label on the box group.
         /// </summary>

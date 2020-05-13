@@ -8,7 +8,7 @@
 namespace Sirenix.OdinInspector
 {
     using System;
-
+    using Yojoy.Tech.Common.Core.Run;
     /// <summary>
     /// <para>Attribute to derive from if you wish to create a new property group type, such as box groups or tab groups.</para>
     /// <note type="note">Note that this attribute has special behaviour for "combining" several attributes into one, as one group,
@@ -62,6 +62,7 @@ namespace Sirenix.OdinInspector
     [AttributeUsage(AttributeTargets.All, AllowMultiple = true, Inherited = true)]
     public abstract class PropertyGroupAttribute : Attribute
     {
+        private MultiLanguageString multiLanguageString;
         /// <summary>
         /// The ID used to grouping properties together.
         /// </summary>
@@ -70,7 +71,11 @@ namespace Sirenix.OdinInspector
         /// <summary>
         /// The name of the group. This is the last part of the group ID if there is a path, otherwise it is just the group ID.
         /// </summary>
-        public string GroupName;
+        public string GroupName
+        {
+            get => multiLanguageString.Text;
+            private set => multiLanguageString = MultiLanguageString.Create(value, value);
+        }
 
         /// <summary>
         /// The order of the group.
@@ -91,7 +96,12 @@ namespace Sirenix.OdinInspector
 
             this.GroupName = index >= 0 && index < groupId.Length ? groupId.Substring(index + 1) : groupId;
         }
-
+        public PropertyGroupAttribute(string englishId,string chineseId,int order)
+        {
+            Order = order;
+            multiLanguageString = MultiLanguageString.Create(englishId, chineseId);
+            GroupID = englishId;
+        }
         /// <summary>
         /// Initializes a new instance of the <see cref="PropertyGroupAttribute"/> class.
         /// </summary>
