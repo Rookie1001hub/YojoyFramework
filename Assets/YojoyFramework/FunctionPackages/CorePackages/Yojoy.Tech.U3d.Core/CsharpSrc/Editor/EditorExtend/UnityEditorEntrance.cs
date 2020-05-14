@@ -21,6 +21,11 @@ namespace Yojoy.Tech.U3d.Core.Editor
         }
         private const string MultiLanguageStringPrefsKey = "MultiLanguageStringPrefsKey";
 
+        public static void UpdateLanguageType(LanguageType languageType)
+        {
+            EditorPrefs.SetString(MultiLanguageStringPrefsKey, languageType.ToString());
+        }
+
         public static LanguageType GetCurrentLanguageType()
         {
             var languageType = EditorPrefs.GetString(key: MultiLanguageStringPrefsKey,

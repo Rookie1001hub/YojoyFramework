@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using System.Linq;
+using Sirenix.Utilities.Editor;
+using Yojoy.Tech.U3d.Core.Editor;
+using Yojoy.Tech.Common.Core.Run;
+
 namespace Yojoy.Tech.U3d.Odin.Editor
 {
     [MenuWindowSizeAttirbute(500,500)]
@@ -11,6 +16,66 @@ namespace Yojoy.Tech.U3d.Odin.Editor
         #region Open Window
         [MenuItem("Framework/Funtion Center %k")]
         public static void Open() => OpenSingleWindow();
+        #endregion
+        #region TopToolbar
+        
+        protected override void BuildTopToolBar()
+        {
+            base.BuildTopToolBar();
+            OdinMenuTree.DefaultMenuStyle.IconSize = 28.00f;
+            OdinMenuTree.Config.DrawSearchToolbar = true;
+        }
+        protected override void OnBeginDrawEditors()
+        {
+            base.OnBeginDrawEditors();
+            if (OdinMenuTree == null)
+                return;
+            var select = MenuTree.Selection.FirstOrDefault();
+            var toolBarHeight = MenuTree.Config.SearchToolbarHeight;
+
+            SirenixEditorGUI.BeginHorizontalToolbar(toolBarHeight);
+            {
+                if (select != null)
+                    GUILayout.Label(select.Name);
+                DrawLanguageSwitch();
+            }
+            SirenixEditorGUI.EndHorizontalToolbar();
+
+            void DrawLanguageSwitch()
+            {
+                var languageType = UnityEditorEntrance.GetCurrentLanguageType();
+                var switchLanguageContent = $"Langeage:{languageType}";
+                if(SirenixEditorGUI.ToolbarButton(
+                    new GUIContent(switchLanguageContent)))
+                {
+                    MakeSwitchLanguageMenu();
+                }
+            }
+            void MakeSwitchLanguageMenu()
+            {
+                var genericMenu = new GenericMenu();
+                var languageTypes =
+                    CommonExtend.GetAllEnumValues<LanguageType>();
+                foreach (var item in languageTypes)
+                {
+                    genericMenu.AddItem(new GUIContent(
+                        item.ToString()), false, SwitchLanguage, item.ToString());
+                }
+            }
+            void SwitchLanguage(object data)
+            {
+                var languageType = ((string)data).AsEnum<LanguageType>();
+                MultiLanguageString.SetLanguageType(languageType);
+                UnityEditorEntrance.UpdateLanguageType(languageType);
+                ForceMenuTreeRebuild();
+                OpenLastMenu();
+
+                var switchTip = MultiLanguageString.Create($"Yojoy已切换" +
+                    $"为{languageType}!", $"Yojoy has been switched to " +
+                    $"{languageType}!");
+                Debug.Log(switchTip.Text);
+            }
+        }
         #endregion
     }
 }
