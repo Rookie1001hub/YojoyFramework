@@ -15,12 +15,12 @@ namespace Yojoy.Tech.U3d.Core.Editor
             Application.dataPath + $"/{YojoyRootDirectoyId}/");
 
         public static readonly DelayInitializationProperty<string> PackageDirectory =
-            CreateDelayInitializationProperty(() => $"{YojoyDirectory.Value}FunctionPackages");
+            CreateDelayInitializationProperty(() => $"{YojoyDirectory.Value}FunctionPackages/");
         public static readonly DelayInitializationProperty<string> CorePackagesDirectory =
-            CreateDelayInitializationProperty(()=>$"{PackageDirectory.Value}CorePackages");
+            CreateDelayInitializationProperty(()=>$"{PackageDirectory.Value}CorePackages/");
 
         public static readonly DelayInitializationProperty<string> ExtendPackagesDirectory =
-            CreateDelayInitializationProperty(() => $"{PackageDirectory.Value}ExtendPackages");
+            CreateDelayInitializationProperty(() => $"{PackageDirectory.Value}ExtendPackages/");
         public static readonly DelayInitializationProperty<HashSet<string>> IgnoreEditorAssemblyIds
             = CreateDelayInitializationProperty(() =>
              {

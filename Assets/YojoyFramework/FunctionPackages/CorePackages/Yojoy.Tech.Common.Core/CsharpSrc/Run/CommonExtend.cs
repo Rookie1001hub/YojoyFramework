@@ -34,6 +34,23 @@ namespace Yojoy.Tech.Common.Core.Run
             var result = (TEnum)Enum.Parse(typeof(TEnum), str);
             return result;
         }
+        /// <summary>
+        /// 获取指定枚举类型所有字段
+        /// </summary>
+        /// <typeparam name="TEnum">指定枚举类型</typeparam>
+        /// <returns></returns>
+        public static List<TEnum> GetAllEnumValues<TEnum>() where TEnum : Enum
+        {
+            var enumList = new List<TEnum>();
+            var enums = Enum.GetValues(typeof(TEnum));
+            foreach (var item in enums)
+            {
+                var strValue = item.ToString();
+                var enumValue = strValue.AsEnum<TEnum>();
+                enumList.Add(enumValue);
+            }
+            return enumList;
+        }
         #endregion
         #region Relection
         public static List<ATTR> GetAttributes<ATTR>(this Type type) where ATTR:Attribute
