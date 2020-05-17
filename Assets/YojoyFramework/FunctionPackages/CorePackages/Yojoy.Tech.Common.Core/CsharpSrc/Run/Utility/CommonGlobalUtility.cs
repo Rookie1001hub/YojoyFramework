@@ -15,6 +15,9 @@ namespace Yojoy.Tech.Common.Core.Run
             var delayProperty = new DelayInitializationProperty<TValue>(func);
             return delayProperty;
         }
+
+        public static string NowDateString() => DateTime.Now.ToString("G");
     }
+   
 }
 
