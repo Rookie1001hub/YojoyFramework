@@ -6,19 +6,36 @@ using System.Linq;
 using Sirenix.Utilities.Editor;
 using Yojoy.Tech.U3d.Core.Editor;
 using Yojoy.Tech.Common.Core.Run;
+using Sirenix.OdinInspector.Editor;
 
 namespace Yojoy.Tech.U3d.Odin.Editor
 {
-    [MenuWindowSizeAttirbute(500,500)]
-    [MenuWindowTitle("Function Center","功能中心")]
+    [MenuWindowSizeAttirbute(500, 500)]
+    [MenuWindowTitle("Function Center", "功能中心")]
     public class FuntionCenterWindow : AbstractMenuWindowGeneric<FuntionCenterWindow>
     {
         #region Open Window
         [MenuItem("Framework/Funtion Center %k")]
         public static void Open() => OpenSingleWindow();
         #endregion
+        #region BuildTree
+        protected override void BuildFixedMenus(OdinMenuTree odinMenuTree)
+        {
+            base.BuildFixedMenus(odinMenuTree);
+            BuildMenuObject<CsharpScaffold>("Csharp Scaffold", "Csharp脚手架");
+
+        }
+        private void BuildMenuObject<TMenuObject>(string englishTitle,
+            string chinesTitle)
+            where TMenuObject : class, new()
+        {
+            var finalTitle = englishTitle ?? typeof(TMenuObject).Name;
+            AddItemAndCacheIndex(OdinMenuTree, MultiLanguageString.Create
+                (finalTitle, chinesTitle).Text, ReflectionUtility.CreateInstance<TMenuObject>());
+        }
+        #endregion
         #region TopToolbar
-        
+
         protected override void BuildTopToolBar()
         {
             base.BuildTopToolBar();
@@ -45,7 +62,7 @@ namespace Yojoy.Tech.U3d.Odin.Editor
             {
                 var languageType = UnityEditorEntrance.GetCurrentLanguageType();
                 var switchLanguageContent = $"Langeage:{languageType}";
-                if(SirenixEditorGUI.ToolbarButton(
+                if (SirenixEditorGUI.ToolbarButton(
                     new GUIContent(switchLanguageContent)))
                 {
                     MakeSwitchLanguageMenu();

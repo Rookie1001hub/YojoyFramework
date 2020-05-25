@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using UnityEngine;
 namespace Yojoy.Tech.Common.Core.Run
 {
@@ -26,6 +27,25 @@ namespace Yojoy.Tech.Common.Core.Run
             }
             return directory;
         }
+        public static string EveryToBig(this string str)
+        {
+            var sb = new StringBuilder();
+            foreach (var c in str)
+            {
+                //char.IsLetter是否为Unicode字母？
+                if(!char.IsLetter(c))
+                {
+                    sb.Append(c);
+                }
+                else
+                {
+                    var bigC = char.ToUpper(c);
+                    sb.Append(bigC);
+                }
+            }
+            return sb.ToString();
+        }
+
         #endregion
 
         #region Enum
