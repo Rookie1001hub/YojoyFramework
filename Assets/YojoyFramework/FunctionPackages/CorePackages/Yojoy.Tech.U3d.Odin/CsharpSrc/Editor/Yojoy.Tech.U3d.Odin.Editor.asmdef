@@ -5,7 +5,8 @@
         "Yojoy.Tech.U3d.Third.Odin.Run",
         "Yojoy.Tech.Common.Core.Run",
         "Yojoy.Tech.U3d.Core.Editor",
-        "Yojoy.Tech.U3d.Core.Run"
+        "Yojoy.Tech.U3d.Core.Run",
+        "Yojoy.Tech.Common.Core.Editor"
     ],
     "optionalUnityReferences": [
         "TestAssemblies"

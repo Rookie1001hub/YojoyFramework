@@ -19,6 +19,11 @@ namespace Yojoy.Tech.Common.Core.Run
         #endregion
 
         #region String
+        /// <summary>
+        /// 确保目录格式
+        /// </summary>
+        /// <param name="directory"></param>
+        /// <returns></returns>
         public static string EnsureDirectoryFormat(this string directory)
         {
             if (!directory.EndsWith("/"))
@@ -27,6 +32,11 @@ namespace Yojoy.Tech.Common.Core.Run
             }
             return directory;
         }
+        /// <summary>
+        /// 将字段内容全部转成大写
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
         public static string EveryToBig(this string str)
         {
             var sb = new StringBuilder();
@@ -45,7 +55,18 @@ namespace Yojoy.Tech.Common.Core.Run
             }
             return sb.ToString();
         }
-
+        /// <summary>
+        /// 判定字符串是否可用
+        /// 内容不能为空也不能为空格键
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static bool IsValid(this string str)
+        {
+            var results = !string.IsNullOrEmpty(str) &&
+                !string.IsNullOrWhiteSpace(str);
+            return results;
+        }
         #endregion
 
         #region Enum

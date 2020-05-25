@@ -63,6 +63,11 @@ namespace Yojoy.Tech.Common.Core.Editor
                 }
             }
         }
+        /// <summary>
+        /// 添加头文件 作者信息
+        /// </summary>
+        /// <param name="coderName"></param>
+        /// <param name="coderEmail"></param>
         public void AppendCommentHeader(string coderName, string coderEmail)
         {
             AppendLine("#region Comment Head");

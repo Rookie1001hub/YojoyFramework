@@ -1,25 +1,28 @@
 ﻿using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Policy;
 using UnityEditor;
 using UnityEngine;
 using Yojoy.Tech.Common.Core.Run;
+using Yojoy.Tech.Common.Core.Editor;
 using Yojoy.Tech.U3d.Core.Run;
+using System;
 
 namespace Yojoy.Tech.U3d.Odin.Editor
 {
     [System.Serializable]
-    public class CsharpScaffold 
+    public class CsharpScaffold
     {
         #region Visualiztion
         public static string OutputDirectoryPrefsKey => UnityGlobalUtility
             .GetPrefsKey("OutputDirectory", typeof(CsharpScaffold));
 
-        [BoxGroup("Base Config","基础配置")]
-        [TextArea(2,3)]
+        [BoxGroup("Base Config", "基础配置")]
+        [TextArea(2, 3)]
         [SerializeField]
         [ReadOnly]
-        [OnValueChanged(methodName:"OnOutputDirectoryChanged")]
+        [OnValueChanged(methodName: "OnOutputDirectoryChanged")]
         private string outputDirectory;
 
         private void OnOutputDirectoryChanged()
@@ -95,6 +98,117 @@ namespace Yojoy.Tech.U3d.Odin.Editor
         [SerializeField]
         private List<CsharpCreateInfo> csharpCreateInfos;
 
+        #endregion
+
+        #region GetScriptContent
+        /// <summary>
+        /// 获取脚本内容
+        /// </summary>
+        /// <param name="csharpScriptAppender"></param>
+        /// <param name="csharpCreateInfo"></param>
+        /// <returns></returns>
+        private string GetScriptContent(CsharpScriptAppender scriptAppender,
+            CsharpCreateInfo csharpCreateInfo)
+        {
+            #region Local Method
+            //尝试添加版权信息
+            TryAppendCopyRight();
+
+            if (requireAddIfPrecompile)
+            {
+                using (new IfPreCompileBlock(scriptAppender,
+                    new List<string> { IfPrecompile }))
+                {
+                    scriptAppender.AppendLine();
+                    scriptAppender.AppendCommentHeader(developerInfo.Name,
+                        developerInfo.Email);
+                    using (new IfPreCompileBlock(scriptAppender,
+                        csharpCreateInfo.IfPreCompileInstructions))
+                    {
+                        using (new NameSpaceBlock(scriptAppender, globalNameSpace))
+                        {
+                            AppendScriptContent();
+                        }
+                    }
+                }
+            }
+            else
+            {
+                scriptAppender.AppendCommentHeader(developerInfo.Name,
+                    developerInfo.Email);
+                using (new NameSpaceBlock(scriptAppender, globalNameSpace))
+                {
+                    AppendScriptContent();
+                }
+            }
+            return scriptAppender.ToString();
+
+            void AppendScriptContent()
+            {
+                var clasaHeadString = string.Format("public {0} {1}",
+                    GetStringKeyword(csharpCreateInfo.CsharpScriptType),
+                    csharpCreateInfo.ScriptName);
+                scriptAppender.AppendLine(clasaHeadString);
+                scriptAppender.AppenLeftBracketAndToRight();
+                scriptAppender.AppendLine();
+                scriptAppender.AppendToLeftAndRightBracket();
+            }
+            string GetStringKeyword(CsharpScriptType csharpScriptType)
+            {
+                switch (csharpScriptType)
+                {
+                    case CsharpScriptType.Class:
+                        return "class";
+                    case CsharpScriptType.AbstractClass:
+                        return "abstrcat class";
+                    case CsharpScriptType.Interface:
+                        return "interface";
+                    case CsharpScriptType.Enum:
+                        return "enum";
+                    case CsharpScriptType.Struct:
+                        return "struce";
+                    default:
+                        throw new ArgumentOutOfRangeException(
+                            nameof(csharpScriptType),csharpScriptType,null);
+                }
+            }
+            void TryAppendCopyRight()
+            {
+                if (!copyRightContent.IsValid())
+                    return;
+                scriptAppender.AppendLine(copyRightContent);
+                scriptAppender.AppendLine();
+            }
+            #endregion
+        }
+        #endregion
+
+        #region Content Handle
+
+        public CsharpScaffold()
+        {
+            copyRightContent = EditorPrefs.GetString(CopyRightPrefsKey);
+            globalNameSpace = EditorPrefs.GetString(GlobalNamespacePrefsKey);
+            IfPrecompile = EditorPrefs.GetString(IfPrecompilePrefsKey);
+
+        }
+        private readonly string DevelopPrefsKey = UnityGlobalUtility.
+            GetPrefsKey("DevelopInfo", typeof(CsharpScaffold));
+        /// <summary>
+        /// 借助Json来持久话Prefs数据
+        /// </summary>
+        private void LoadDevelopInfo()
+        {
+            var jsonString = EditorPrefs.GetString(DevelopPrefsKey);
+            if (string.IsNullOrEmpty(jsonString))
+                return;
+            developerInfo = JsonUtility.FromJson<DevelopInfo>(jsonString);
+        }
+        private void SaveDevelopInfo()
+        {
+            var jsonString = JsonUtility.ToJson(developerInfo);
+            EditorPrefs.SetString(DevelopPrefsKey, jsonString);
+        }
         #endregion
     }
 }
