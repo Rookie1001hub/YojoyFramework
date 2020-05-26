@@ -6,7 +6,7 @@ using System.Text;
 using UnityEngine;
 namespace Yojoy.Tech.Common.Core.Run
 {
-   
+
     public static class CommonExtend
     {
         #region Common
@@ -43,7 +43,7 @@ namespace Yojoy.Tech.Common.Core.Run
             foreach (var c in str)
             {
                 //char.IsLetter是否为Unicode字母？
-                if(!char.IsLetter(c))
+                if (!char.IsLetter(c))
                 {
                     sb.Append(c);
                 }
@@ -70,7 +70,7 @@ namespace Yojoy.Tech.Common.Core.Run
         #endregion
 
         #region Enum
-        public static TEnum AsEnum<TEnum>(this string str)where TEnum :Enum
+        public static TEnum AsEnum<TEnum>(this string str) where TEnum : Enum
         {
             var result = (TEnum)Enum.Parse(typeof(TEnum), str);
             return result;
@@ -94,10 +94,10 @@ namespace Yojoy.Tech.Common.Core.Run
         }
         #endregion
         #region Relection
-        public static List<ATTR> GetAttributes<ATTR>(this Type type) where ATTR:Attribute
+        public static List<ATTR> GetAttributes<ATTR>(this Type type) where ATTR : Attribute
         {
             var attributes = type.GetCustomAttributes(typeof(ATTR), true).
-                Select(t=>(ATTR)t).ToList();
+                Select(t => (ATTR)t).ToList();
             return attributes;
         }
         public static ATTR GetSingleAttribute<ATTR>(this Type type) where ATTR : Attribute
@@ -109,6 +109,23 @@ namespace Yojoy.Tech.Common.Core.Run
             }
             var attribute = attributes.FirstOrDefault();
             return attribute;
+        }
+        #endregion
+        #region Dictionary
+        public static KeyValuePair<TKey, TValue> FindKeyVale<TKey, TValue>
+        (
+            this IDictionary<TKey, TValue> dictionary,
+            Func<TValue, bool> valueSelector
+        )
+        {
+            foreach (var kv in dictionary)
+            {
+                if (valueSelector(kv.Value))
+                {
+                    return kv;
+                }
+            }
+            return default;
         }
         #endregion
     }

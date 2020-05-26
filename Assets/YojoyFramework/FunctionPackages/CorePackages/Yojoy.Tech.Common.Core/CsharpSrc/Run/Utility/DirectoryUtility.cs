@@ -52,6 +52,10 @@ namespace Yojoy.Tech.Common.Core.Run
                 File.SetAttributes(targetDirectory, FileAttributes.Hidden);
             }
         }
+        /// <summary>
+        /// 确保目标目录存在
+        /// </summary>
+        /// <param name="targetDiorectory"></param>
         public static void EnsureDirectoryExist(string targetDiorectory)
         {
             var lastIndex = targetDiorectory.LastIndexOf(value: "/", StringComparison.Ordinal);
