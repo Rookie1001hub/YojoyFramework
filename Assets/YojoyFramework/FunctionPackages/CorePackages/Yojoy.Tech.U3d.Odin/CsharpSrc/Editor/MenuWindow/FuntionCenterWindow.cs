@@ -78,6 +78,7 @@ namespace Yojoy.Tech.U3d.Odin.Editor
                     genericMenu.AddItem(new GUIContent(
                         item.ToString()), false, SwitchLanguage, item.ToString());
                 }
+                genericMenu.ShowAsContext();
             }
             void SwitchLanguage(object data)
             {

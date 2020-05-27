@@ -16,6 +16,7 @@ namespace Yojoy.Tech.U3d.Odin.Editor
         public CsharpScriptType CsharpScriptType;
         [LabelText("If Compile Instructions","预编译指令")]
         public List<string> IfPreCompileInstructions;
+        
     }
 }
 

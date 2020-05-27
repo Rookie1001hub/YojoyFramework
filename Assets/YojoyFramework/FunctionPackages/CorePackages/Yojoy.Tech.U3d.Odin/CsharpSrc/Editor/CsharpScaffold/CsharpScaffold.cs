@@ -127,6 +127,7 @@ namespace Yojoy.Tech.U3d.Odin.Editor
                     scriptAppender.AppendLine();
                     scriptAppender.AppendCommentHeader(developerInfo.Name,
                         developerInfo.Email);
+
                     using (new IfPreCompileBlock(scriptAppender,
                         csharpCreateInfo.IfPreCompileInstructions))
                     {
@@ -146,6 +147,7 @@ namespace Yojoy.Tech.U3d.Odin.Editor
                     AppendScriptContent();
                 }
             }
+            
             return scriptAppender.ToString();
 
             void AppendScriptContent()
@@ -232,7 +234,7 @@ namespace Yojoy.Tech.U3d.Odin.Editor
             OnGlobalNameSpaceChanged();
         }
         #endregion
-        #region MyRegion
+        #region CreateScript
         private string GetScriptOutPath(CsharpCreateInfo createInfo,
             string directory)
         {
@@ -302,6 +304,31 @@ namespace Yojoy.Tech.U3d.Odin.Editor
             AssetDatabase.Refresh();
             UnityEditorUtility.DisplayTip("Script is created");
         }
+        #endregion
+
+        //两种脚本创建方法
+        //1.弹出目录选择窗口，开发者选择指定输出目录
+        //2.直接使用当前脚本输出目录创建脚本
+        #region Visual Invoke
+        [Button("Create script in selcet directory","选择" +
+            "目录创建脚本",ButtonSizes.Medium)]
+        private void CreateScriptInSelectDirectory()
+        {
+            var defaultDirectory = outputDirectory ?? Application.dataPath;
+            var targetDirectory = EditorUtility.OpenFolderPanel
+                ("Please select script output directory",
+                defaultDirectory, null);
+            if (!Directory.Exists(targetDirectory))
+            {
+                UnityEditorUtility.DisplayTip("No directory selected!");
+                return;
+            }
+            outputDirectory = targetDirectory.EnsureDirectoryFormat();
+            CreateScript();
+        }
+        [Button("Create script in output directory",
+            "在输出目录下创建脚本",ButtonSizes.Medium)]
+        private void CreateScriptOutputDirectory() => CreateScript();
         #endregion
     }
 }

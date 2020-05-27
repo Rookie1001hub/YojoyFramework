@@ -53,7 +53,7 @@ namespace Yojoy.Tech.Common.Core.Editor
             for (int index = 0; index < instructions.Length; index++)
             {
                 var args = instructions[index];
-                Append(index == 0 ? $"#if{args}" : $"&&{args}");
+                Append(index == 0 ? $"#if {args}" : $"&& {args}");
             }
             AppendLine();
         }

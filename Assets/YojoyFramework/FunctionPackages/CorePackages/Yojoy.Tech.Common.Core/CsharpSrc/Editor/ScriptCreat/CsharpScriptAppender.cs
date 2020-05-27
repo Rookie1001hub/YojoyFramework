@@ -72,10 +72,10 @@ namespace Yojoy.Tech.Common.Core.Editor
         {
             AppendLine("#region Comment Head");
             AppendLine();
-            AppendLine($"// Author:         {coderName}");
+            AppendLine($"// Author:        {coderName}");
             AppendLine(
-                $"// CreateDate:       { CommonGlobalUtility.NowDateString()}");
-            AppendLine($"//Email:       {coderEmail}");
+                $"// CreateDate:    { CommonGlobalUtility.NowDateString()}");
+            AppendLine($"//Email:         {coderEmail}");
             AppendLine();
             AppendLine("#endregion");
             AppendLine();
