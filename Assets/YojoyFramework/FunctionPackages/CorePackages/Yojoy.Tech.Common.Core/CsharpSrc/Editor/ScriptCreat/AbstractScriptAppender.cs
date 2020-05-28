@@ -35,7 +35,7 @@ namespace Yojoy.Tech.Common.Core.Editor
         public void AppendLine(string content)
         {
             AppendIndentation();
-            stringBuilder.Append(content);
+            stringBuilder.AppendLine(content);
         }
         public void AppendLine()
         {
