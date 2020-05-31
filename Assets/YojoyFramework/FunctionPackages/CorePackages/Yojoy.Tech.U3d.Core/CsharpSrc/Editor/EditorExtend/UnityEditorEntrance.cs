@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-using Yojoy.Tech.Common.Core.Run;
-using StringAssemblyMap = System.Collections.Generic.Dictionary<string, System.Reflection.Assembly>;
-using static Yojoy.Tech.Common.Core.Run.CommonGlobalUtility;
 using System.IO;
 using System.Reflection;
 using System.Linq;
+using Yojoy.Tech.Common.Core.Run;
+using StringAssemblyMap = System.Collections.Generic.Dictionary<string, System.Reflection.Assembly>;
+using static Yojoy.Tech.Common.Core.Run.CommonGlobalUtility;
+using StateChangeHandlerMap = System.Collections.Generic.Dictionary<
+    UnityEditor.PlayModeStateChange, System.Collections.Generic.List
+    <Yojoy.Tech.U3d.Core.Editor.IEditorStateChangeHandler>>;
 
 namespace Yojoy.Tech.U3d.Core.Editor
 {
@@ -18,6 +21,9 @@ namespace Yojoy.Tech.U3d.Core.Editor
         static UnityEditorEntrance()
         {
             InitMultiLanguageContext();
+            EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
+            OnPlayModeStateChanged(PlayModeStateChange.EnteredEditMode);
+            Debug.Log("YojoyFramework is started");
         }
         private const string MultiLanguageStringPrefsKey = "MultiLanguageStringPrefsKey";
 
@@ -43,7 +49,7 @@ namespace Yojoy.Tech.U3d.Core.Editor
             RunAssemblies =
             CreateDelayInitializationProperty(() => InitRunAssemblies());
         public static readonly DelayInitializationProperty<Assembly[]>
-            EditorAssemblyArrary = CreateDelayInitializationProperty(()=>
+            EditorAssemblyArrary = CreateDelayInitializationProperty(() =>
             EditorAssemblies.Value.Values.ToArray());
 
 
@@ -68,7 +74,7 @@ namespace Yojoy.Tech.U3d.Core.Editor
         }
 
         private static void InitAssembliesAtDirectory(string packageDirectory,
-            StringAssemblyMap stringAssemblyMap,string assemblyTypeId)
+            StringAssemblyMap stringAssemblyMap, string assemblyTypeId)
         {
             var packageDirectories = DirectoryUtility.GetAllFirstSonDirectory(packageDirectory);
             foreach (var item in packageDirectories)
@@ -86,12 +92,42 @@ namespace Yojoy.Tech.U3d.Core.Editor
                     continue;
                 }
                 var assembly = Assembly.LoadFile(assemblyPath);
-                stringAssemblyMap.Add(assemblyId,assembly);
+                stringAssemblyMap.Add(assemblyId, assembly);
             }
         }
 
         #endregion
         #region EditorPlayModeStateChange
+        private static readonly
+            DelayInitializationProperty<StateChangeHandlerMap>
+            stateChangeHandlersDelay = CreateDelayInitializationProperty(() =>
+              {
+                  var tempMap = new StateChangeHandlerMap();
+                  var handlers = ReflectionUtility.GetAllInstance
+                  <IEditorStateChangeHandler>(EditorAssemblyArrary.Value);
+                  foreach (var handler in handlers)
+                  {
+                      if (!tempMap.ContainsKey(handler.ConcernedStateChange))
+                      {
+                          tempMap.Add(handler.ConcernedStateChange,
+                              new List<IEditorStateChangeHandler>());
+                      }
+                      var targetHandlers = tempMap[handler.ConcernedStateChange];
+                      if (!targetHandlers.Contains(handler))
+                      {
+                          targetHandlers.Add(handler);
+                      }
+                  }
+                  return tempMap;
+              });
+
+        private static void OnPlayModeStateChanged(
+            PlayModeStateChange playModeStateChange)
+        {
+            stateChangeHandlersDelay.Value.TryGetValue
+                (playModeStateChange).value?.ForEach
+                (handler => handler.Handle());
+        }
 
         #endregion
     }

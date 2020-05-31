@@ -167,13 +167,13 @@ namespace Yojoy.Tech.U3d.Odin.Editor
                     case CsharpScriptType.Class:
                         return "class";
                     case CsharpScriptType.AbstractClass:
-                        return "abstrcat class";
+                        return "abstract class";
                     case CsharpScriptType.Interface:
                         return "interface";
                     case CsharpScriptType.Enum:
                         return "enum";
                     case CsharpScriptType.Struct:
-                        return "struce";
+                        return "struct";
                     default:
                         throw new ArgumentOutOfRangeException(
                             nameof(csharpScriptType),csharpScriptType,null);

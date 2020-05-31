@@ -12,7 +12,7 @@ namespace Yojoy.Tech.Common.Core.Editor
             string @namespace)
         {
             this.appender = appender;
-            appender.AppendLine($"namespace{@namespace}");
+            appender.AppendLine($"namespace {@namespace}");
             appender.AppenLeftBracketAndToRight();
         }
 

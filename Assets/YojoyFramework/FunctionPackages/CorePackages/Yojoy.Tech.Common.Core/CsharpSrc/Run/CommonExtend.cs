@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEditor.UIElements;
 using UnityEngine;
 namespace Yojoy.Tech.Common.Core.Run
 {
@@ -127,6 +128,18 @@ namespace Yojoy.Tech.Common.Core.Run
             }
             return default;
         }
+        public static (bool hasValue,TValue value)TryGetValue
+            <TKey,TValue>(this IDictionary<TKey,TValue> dictionary
+            ,TKey key)
+        {
+            if(!dictionary.ContainsKey(key))
+            {
+                return (false, default);
+            }
+            var value = dictionary[key];
+            return (true, value);
+        }
+
         #endregion
     }
 }
