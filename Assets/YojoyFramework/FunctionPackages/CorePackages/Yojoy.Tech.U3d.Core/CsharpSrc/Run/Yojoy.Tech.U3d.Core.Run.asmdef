@@ -1,3 +1,15 @@
-﻿{
-	"name": "Yojoy.Tech.U3d.Core.Run"
+{
+    "name": "Yojoy.Tech.U3d.Core.Run",
+    "references": [
+        "GUID:116012d8b1d3a5f4187f878ebd6523e6"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": []
 }
