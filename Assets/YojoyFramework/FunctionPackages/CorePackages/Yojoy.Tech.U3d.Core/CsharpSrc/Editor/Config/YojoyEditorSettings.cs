@@ -34,6 +34,19 @@ namespace Yojoy.Tech.U3d.Core.Editor
             CreateDelayInitializationProperty(() => "Assets/");
         public static readonly DelayInitializationProperty<string> AssetsHeadConst =
             CreateDelayInitializationProperty(() => $"Assets/{YojoyRootDirectoyId}/");
+        /// <summary>
+        /// 依据模块Id获取模块资源目录
+        /// </summary>
+        /// <param name="moduleId"></param>
+        /// <param name="moduleType"></param>
+        /// <returns></returns>
+        public static string GetModuleAssetsDirectory(string moduleId
+            ,string moduleType)
+        {
+            var directory = CorePackagesDirectory.Value
+                + $"{moduleId}/CsharpSrc/{moduleType}/Assets/";
+            return directory;
+        }
     }
 
 }
