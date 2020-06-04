@@ -16,11 +16,11 @@ namespace Yojoy.Tech.U3d.Core.Editor
     public class ProjectEntrance : IEditorStateChangeHandler
     {
         public PlayModeStateChange ConcernedStateChange
-            => PlayModeStateChange.EnteredEditMode;
+            => PlayModeStateChange.EnteredPlayMode;
 
         public void Handle()
         {
-            //EditorApplication.projectWindowItemOnGUI += ProjectWindowItemOnGUI;
+           EditorApplication.projectWindowItemOnGUI += ProjectWindowItemOnGUI;
         }
         private readonly DelayInitializationProperty<List<IProjectExpander>>
             expanderDelay = CreateDelayInitializationProperty(() => 
@@ -35,16 +35,18 @@ namespace Yojoy.Tech.U3d.Core.Editor
             Rect selectionRect)
         {
             var path = AssetDatabase.GUIDToAssetPath(guid);
+           
             path = path.EnsureDirectoryFormat();
-            foreach (var item in expanderDelay.Value)
-            {
-                item.SaveContext(guid, path);
-                if (!item.CheckContext())
-                {
-                    continue;
-                }
-                item.Execute(selectionRect);
-            }
+            //Debug.Log(expanderDelay.Value.Count);
+            //foreach (var item in expanderDelay.Value)
+            //{
+            //    item.SaveContext(guid, path);
+            //    if (!item.CheckContext())
+            //    {
+            //        continue;
+            //    }
+            //    //item.Execute(selectionRect);
+            //}
         }
     }
 }

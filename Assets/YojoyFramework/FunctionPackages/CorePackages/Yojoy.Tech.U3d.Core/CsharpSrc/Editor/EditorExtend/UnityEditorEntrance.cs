@@ -22,8 +22,11 @@ namespace Yojoy.Tech.U3d.Core.Editor
         {
             InitMultiLanguageContext();
             EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
-            OnPlayModeStateChanged(PlayModeStateChange.EnteredEditMode);
+            EditorApplication.playModeStateChanged += OnPlayModeStateChangedMy;
+            OnPlayModeStateChanged(PlayModeStateChange.EnteredPlayMode);
+            OnPlayModeStateChangedMy(PlayModeStateChange.ExitingPlayMode);
             Debug.Log("YojoyFramework is started");
+
         }
         private const string MultiLanguageStringPrefsKey = "MultiLanguageStringPrefsKey";
 
@@ -70,6 +73,7 @@ namespace Yojoy.Tech.U3d.Core.Editor
                 tempStringAssemblyMap, assemblyTypeId: "Editor");
             InitAssembliesAtDirectory(YojoyEditorSettings.ExtendPackagesDirectory.Value,
                 tempStringAssemblyMap, assemblyTypeId: "Editor");
+            Debug.Log(tempStringAssemblyMap.Values.Count);
             return tempStringAssemblyMap;
         }
 
@@ -80,8 +84,13 @@ namespace Yojoy.Tech.U3d.Core.Editor
             foreach (var item in packageDirectories)
             {
                 var packageName = DirectoryUtility.GetDirectoryName(item);
-                var assemblyId = packageName +"."+ assemblyTypeId;
-                if (YojoyEditorSettings.IgnoreEditorAssemblyIds.Value.Contains(assemblyTypeId))
+                var assemblyId = packageName + "." + assemblyTypeId;
+                //这边路径写错 注意分辨路径
+                //if (YojoyEditorSettings.IgnoreEditorAssemblyIds.Value.Contains(assemblyTypeId))
+                //{
+                //    continue;
+                //}
+                if (YojoyEditorSettings.IgnoreEditorAssemblyIds.Value.Contains(assemblyId))
                 {
                     continue;
                 }
@@ -128,7 +137,10 @@ namespace Yojoy.Tech.U3d.Core.Editor
                 (playModeStateChange).value?.ForEach
                 (handler => handler.Handle());
         }
-
+        private static void OnPlayModeStateChangedMy(PlayModeStateChange playModeStateChange)
+        {
+            Debug.ClearDeveloperConsole();
+        }
         #endregion
     }
 }

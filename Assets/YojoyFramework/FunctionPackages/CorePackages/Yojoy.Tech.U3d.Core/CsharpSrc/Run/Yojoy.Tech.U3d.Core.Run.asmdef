@@ -1,7 +1,8 @@
 {
     "name": "Yojoy.Tech.U3d.Core.Run",
     "references": [
-        "GUID:116012d8b1d3a5f4187f878ebd6523e6"
+        "GUID:116012d8b1d3a5f4187f878ebd6523e6",
+        "GUID:b82021c8ec6a7c54e9c34502e6eedde1"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],
