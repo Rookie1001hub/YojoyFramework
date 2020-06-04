@@ -7,6 +7,7 @@ using Sirenix.Utilities.Editor;
 using Yojoy.Tech.U3d.Core.Editor;
 using Yojoy.Tech.Common.Core.Run;
 using Sirenix.OdinInspector.Editor;
+using System;
 
 namespace Yojoy.Tech.U3d.Odin.Editor
 {
@@ -17,6 +18,13 @@ namespace Yojoy.Tech.U3d.Odin.Editor
         #region Open Window
         [MenuItem("Framework/Funtion Center %k")]
         public static void Open() => OpenSingleWindow();
+
+        public static void OpneTargetMenu(Type menuType)
+        {
+            OpenSingleWindow();
+            SingleWindow.Value.SwitchToTargetMenu(menuType);
+        }
+
         #endregion
         #region BuildTree
         protected override void BuildFixedMenus(OdinMenuTree odinMenuTree)

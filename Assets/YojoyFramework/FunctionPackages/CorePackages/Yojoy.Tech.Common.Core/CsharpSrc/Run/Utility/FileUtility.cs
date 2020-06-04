@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.Accessibility;
 
 namespace Yojoy.Tech.Common.Core.Run
 {
@@ -28,6 +29,26 @@ namespace Yojoy.Tech.Common.Core.Run
         {
             DirectoryUtility.EnsureDirectoryExist(path);
             File.WriteAllText(path, content);
+        }
+        public static void TryDelete(string path)
+        {
+            if(!File.Exists(path))
+            {
+                File.Delete(path);
+            }
+        }
+        public static void TryDeleteAll(List<string> paths)
+        {
+            foreach (var path in paths)
+            {
+                TryDelete(path);
+            }
+        }
+        public static void WriteAllBytes(string path,byte[] bytes)
+        {
+            DirectoryUtility.EnsureDirectoryExist(path);
+            TryDelete(path);
+            File.WriteAllBytes(path, bytes);
         }
     }
 }

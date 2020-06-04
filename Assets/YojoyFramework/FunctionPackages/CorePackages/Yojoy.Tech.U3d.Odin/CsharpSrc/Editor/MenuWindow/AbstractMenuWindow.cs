@@ -19,13 +19,13 @@ namespace Yojoy.Tech.U3d.Odin.Editor
 
         protected OdinMenuTree OdinMenuTree { get; private set; }
 
-        protected void SwitchTargetMenu(Type menuType)
+        protected void SwitchToTargetMenu(Type menuType)
         {
             var index = menuTypes.FindIndex(match: m => m == menuType);
-            SwithcTargetMenu(index);
+            SwitchToTargetMenu(index);
         }
 
-        protected virtual void SwithcTargetMenu(int index)
+        protected virtual void SwitchToTargetMenu(int index)
         {
             if (index < 0 || index >= menuTypes.Count)
                 return;
@@ -60,7 +60,7 @@ namespace Yojoy.Tech.U3d.Odin.Editor
         /// <summary>
         /// 打开之前的窗口激活项
         /// </summary>
-        protected void OpenLastMenu() => SwithcTargetMenu(index: currentMenuIndex);
+        protected void OpenLastMenu() => SwitchToTargetMenu(index: currentMenuIndex);
         /// <summary>
         /// 添加对象并缓存
         /// </summary>
