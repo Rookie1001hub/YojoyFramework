@@ -16,7 +16,7 @@ namespace Yojoy.Tech.U3d.Core.Editor
     public class ProjectEntrance : IEditorStateChangeHandler
     {
         public PlayModeStateChange ConcernedStateChange
-            => PlayModeStateChange.EnteredPlayMode;
+            => PlayModeStateChange.EnteredEditMode;
 
         public void Handle()
         {
@@ -37,16 +37,15 @@ namespace Yojoy.Tech.U3d.Core.Editor
             var path = AssetDatabase.GUIDToAssetPath(guid);
            
             path = path.EnsureDirectoryFormat();
-            //Debug.Log(expanderDelay.Value.Count);
-            //foreach (var item in expanderDelay.Value)
-            //{
-            //    item.SaveContext(guid, path);
-            //    if (!item.CheckContext())
-            //    {
-            //        continue;
-            //    }
-            //    //item.Execute(selectionRect);
-            //}
+            foreach (var item in expanderDelay.Value)
+            {
+                item.SaveContext(guid, path);
+                if (!item.CheckContext())
+                {
+                    continue;
+                }
+                item.Execute(selectionRect);
+            }
         }
     }
 }

@@ -8,7 +8,7 @@ namespace Yojoy.Tech.U3d.Core.Editor
 {
     public static class YojoyEditorSettings
     {
-        private static readonly string YojoyRootDirectoyId = "YojoyFramework";
+        public  static readonly string YojoyRootDirectoyId = "YojoyFramework";
 
         public static readonly DelayInitializationProperty<string> YojoyDirectory =
             CreateDelayInitializationProperty(() =>
@@ -34,6 +34,13 @@ namespace Yojoy.Tech.U3d.Core.Editor
             CreateDelayInitializationProperty(() => "Assets/");
         public static readonly DelayInitializationProperty<string> AssetsHeadConst =
             CreateDelayInitializationProperty(() => $"Assets/{YojoyRootDirectoyId}/");
+        public static string GetModuleAssetsDirectory(string moduleId,
+            string moduleType)
+        {
+            var directory = CorePackagesDirectory.Value
+                            + $"{moduleId}/CsharpSrc/{moduleType}/Assets/";
+            return directory;
+        }
     }
 
 }

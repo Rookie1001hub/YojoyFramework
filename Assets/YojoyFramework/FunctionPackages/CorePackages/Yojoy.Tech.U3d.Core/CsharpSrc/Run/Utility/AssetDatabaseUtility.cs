@@ -71,7 +71,7 @@ namespace Yojoy.Tech.U3d.Core.Run
                 path = GetAssetsPath(path);
             }
             var args = new object[] { path, type };
-            var asset = (Object)loadAllAssetsAtPathMethod.Invoke(null, args);
+            var asset = (Object)loadAssetAtPathMethod.Invoke(null, args);
             return asset;
         }
         public static TAsset LoadAssetAtPath<TAsset>(string path)

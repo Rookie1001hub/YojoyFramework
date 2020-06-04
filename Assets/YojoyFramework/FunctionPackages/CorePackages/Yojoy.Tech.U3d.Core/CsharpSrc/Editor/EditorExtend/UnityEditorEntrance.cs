@@ -80,7 +80,8 @@ namespace Yojoy.Tech.U3d.Core.Editor
             foreach (var item in packageDirectories)
             {
                 var packageName = DirectoryUtility.GetDirectoryName(item);
-                var assemblyId = packageName + assemblyTypeId;
+                //这边路径写对
+                var assemblyId = packageName +"."+ assemblyTypeId;
                 if (YojoyEditorSettings.IgnoreEditorAssemblyIds.Value.Contains(assemblyTypeId))
                 {
                     continue;
