@@ -26,6 +26,7 @@ namespace Yojoy.Tech.Common.Core.Run
         public static TObject CreateInstance<TObject>(Type type)
        where TObject : class
         {
+            Debug.LogError(type.Name);
             var instance = (TObject)Activator.CreateInstance(type);
             return instance;
         }
@@ -42,7 +43,9 @@ namespace Yojoy.Tech.Common.Core.Run
             var targetTypes = GetTypeList<TObject>(isInterface: false, isAbstract: false, assemblies);
             foreach (var item in targetTypes)
             {
+                Debug.Log($"TObject:{typeof(TObject).Name},item:{item.Name}");
                 var instance = CreateInstance<TObject>(item);
+                //Debug.Log(instance == null);
                 instances.Add(instance);
             }
             return instances;
