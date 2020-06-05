@@ -14,7 +14,7 @@ using System.IO;
 namespace Yojoy.Tech.U3d.Odin.Editor
 {
     [System.Serializable]
-    public class CsharpScaffold
+    public class CsharpScaffold:IOnActive
     {
         #region Visualiztion
         public static string OutputDirectoryPrefsKey => UnityGlobalUtility
@@ -329,6 +329,9 @@ namespace Yojoy.Tech.U3d.Odin.Editor
         [Button("Create script in output directory",
             "在输出目录下创建脚本",ButtonSizes.Medium)]
         private void CreateScriptOutputDirectory() => CreateScript();
+
+        public void OnActive() => UpdateOutputDirectory();
+       
         #endregion
     }
 }
