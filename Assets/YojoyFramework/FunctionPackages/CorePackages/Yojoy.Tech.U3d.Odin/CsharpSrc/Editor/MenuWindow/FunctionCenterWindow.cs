@@ -8,15 +8,16 @@ using Yojoy.Tech.U3d.Core.Editor;
 using Yojoy.Tech.Common.Core.Run;
 using Sirenix.OdinInspector.Editor;
 using System;
+using Yojoy.Tech.U3d.Core.Run;
 
 namespace Yojoy.Tech.U3d.Odin.Editor
 {
     [MenuWindowSizeAttirbute(500, 500)]
     [MenuWindowTitle("Function Center", "功能中心")]
-    public class FuntionCenterWindow : AbstractMenuWindowGeneric<FuntionCenterWindow>
+    public class FunctionCenterWindow : AbstractMenuWindowGeneric<FunctionCenterWindow>
     {
         #region Open Window
-        [MenuItem("Framework/Funtion Center %k")]
+        [MenuItem("Framework/Function Center %k")]
         public static void Open() => OpenSingleWindow();
 
         public static void OpneTargetMenu(Type menuType)
@@ -31,7 +32,10 @@ namespace Yojoy.Tech.U3d.Odin.Editor
         {
             base.BuildFixedMenus(odinMenuTree);
             BuildMenuObject<CsharpScaffold>("Csharp Scaffold", "Csharp脚手架");
-
+            var prefsSpannerTip = MultiLanguageString.Create
+                ("Prefs spanner", "Prefs工具");
+            AddItemAndCacheIndex(OdinMenuTree, prefsSpannerTip.Text
+                , PrefsSpanner.Instance);
         }
         private void BuildMenuObject<TMenuObject>(string englishTitle,
             string chinesTitle)

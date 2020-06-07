@@ -44,7 +44,7 @@ namespace Yojoy.Tech.U3d.Odin.Editor
             }
             EditorPrefs.SetString(CsharpScaffold.OutputDirectoryPrefsKey
                 , Path);
-            FuntionCenterWindow.OpneTargetMenu(typeof(CsharpScaffold));
+            FunctionCenterWindow.OpneTargetMenu(typeof(CsharpScaffold));
         }
     }
 }
