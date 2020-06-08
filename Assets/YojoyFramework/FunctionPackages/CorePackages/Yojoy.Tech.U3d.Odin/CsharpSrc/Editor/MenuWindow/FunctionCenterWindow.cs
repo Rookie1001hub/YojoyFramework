@@ -33,9 +33,10 @@ namespace Yojoy.Tech.U3d.Odin.Editor
             base.BuildFixedMenus(odinMenuTree);
             BuildMenuObject<CsharpScaffold>("Csharp Scaffold", "Csharp脚手架");
             var prefsSpannerTip = MultiLanguageString.Create
-                ("Prefs spanner", "Prefs工具");
+                ("Prefs Spanner", "Prefs工具");
             AddItemAndCacheIndex(OdinMenuTree, prefsSpannerTip.Text
                 , PrefsSpanner.Instance);
+            BuildMenuObject<PrecompileModifier>("PreCompile Modifier", "预编译修改");
         }
         private void BuildMenuObject<TMenuObject>(string englishTitle,
             string chinesTitle)

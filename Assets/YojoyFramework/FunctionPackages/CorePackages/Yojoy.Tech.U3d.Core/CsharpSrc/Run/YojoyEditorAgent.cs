@@ -16,5 +16,7 @@ namespace Yojoy.Tech.U3d.Core.Run
     public static class YojoyEditorAgent
     {
         public static Action<string> DispalyTip;
+
+        public static Func<string, string> GetBeautifiedJson;
     }
 }

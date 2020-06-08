@@ -543,7 +543,10 @@ PlayerSettings:
   webGLThreadsSupport: 0
   webGLWasmStreaming: 0
   scriptingDefineSymbols:
-    1: ODIN_INSPECTOR
+    1: t1
+    4: t1
+    7: t1
+    13: t1
   platformArchitecture: {}
   scriptingBackend: {}
   il2cppCompilerConfiguration: {}

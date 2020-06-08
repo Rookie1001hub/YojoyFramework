@@ -83,6 +83,7 @@ namespace Yojoy.Tech.U3d.Odin.Editor
             {
                 currentMenuIndex = odinMenuTree.MenuItems.FindIndex
                     (match: item => item == targetItem);
+                targetItem.As<IOnActive>()?.OnActive();
             }
         }
         

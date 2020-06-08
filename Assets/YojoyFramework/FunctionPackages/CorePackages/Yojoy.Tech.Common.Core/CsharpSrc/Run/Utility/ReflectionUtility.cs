@@ -23,6 +23,15 @@ namespace Yojoy.Tech.Common.Core.Run
             return types;
         }
 
+        public static void SetProperty(object obj,string propertyId,
+            object value)
+        {
+            var propertyInfos = obj.GetType().GetProperties().ToList();
+            var propertyInfo = propertyInfos.Find(
+                f => f.Name == propertyId);
+            propertyInfo.SetValue(obj, value);
+        }
+
         public static TObject CreateInstance<TObject>(Type type)
        where TObject : class
         {
