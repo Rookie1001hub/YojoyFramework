@@ -12,7 +12,7 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 using Yojoy.Tech.Common.Core.Run;
-using Yojoy.Tech.U3d.Core.Editor;
+using Yojoy.Tech.U3d.Core.Run;
 using static Yojoy.Tech.Common.Core.Run.CommonGlobalUtility;
 namespace Yojoy.Tech.U3d.Core.Run
 {
@@ -33,6 +33,8 @@ namespace Yojoy.Tech.U3d.Core.Run
                 recordRootDirectory = Application.persistentDataPath + "/YojoyFramework/Records";
             }
         }
+
+        public static UnityRecordLoader Instance = new UnityRecordLoader();
         #endregion
         
         private RecordAttribute CheckMustAttribute(Type recordType)
@@ -120,11 +122,17 @@ namespace Yojoy.Tech.U3d.Core.Run
                     ReflectionUtility.SetProperty(record,
                         "RecordName", recordName);
                 }
-                var content = YojoyEditorAgent.GetBeautifieldJson(JsonUtility.ToJson(record));
+                var content = YojoyEditorAgent.GetBeautifiedJson(JsonUtility.ToJson(record));
                 FileUtility.WriteAllText(path, content);
             }
             return record;
         }
+        /// <summary>
+        /// 加载目标记录实例
+        /// </summary>
+        /// <param name="recordType"></param>
+        /// <param name="recordName"></param>
+        /// <returns></returns>
 
         public object LoadRecord(Type recordType, string recordName)
         {
@@ -133,7 +141,11 @@ namespace Yojoy.Tech.U3d.Core.Run
             var record = LoadRecordAtPath(path, recordType, recordAttribute);
             return record;
         }
-
+        /// <summary>
+        /// 保存记录实例
+        /// </summary>
+        /// <param name="record"></param>
+        /// <param name="deleteExist"></param>
         public void SaveRecord(IRecord record, bool deleteExist = false)
         {
             var recordType = record.GetType();
@@ -149,6 +161,11 @@ namespace Yojoy.Tech.U3d.Core.Run
                 JsonUtility.ToJson(record));
             FileUtility.WriteAllText(path, content);
         }
+        /// <summary>
+        /// 加载非单例类型的所有序列化文件
+        /// </summary>
+        /// <typeparam name="TRecord"></typeparam>
+        /// <returns></returns>
         public List<TRecord> LoadRecords<TRecord>()
            where TRecord : class, new()
         {

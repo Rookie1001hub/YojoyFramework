@@ -36,6 +36,7 @@ namespace Yojoy.Tech.U3d.Odin.Editor
                 ("Prefs Spanner", "Prefs工具");
             AddItemAndCacheIndex(OdinMenuTree, prefsSpannerTip.Text
                 , PrefsSpanner.Instance);
+            BuildMenuObject<SwissArmyKnife>("Swiss army knife", "瑞士军刀");
             BuildMenuObject<PrecompileModifier>("PreCompile Modifier", "预编译修改");
         }
         private void BuildMenuObject<TMenuObject>(string englishTitle,

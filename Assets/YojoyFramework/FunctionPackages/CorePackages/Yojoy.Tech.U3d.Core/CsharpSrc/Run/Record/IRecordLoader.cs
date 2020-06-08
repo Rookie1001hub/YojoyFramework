@@ -8,7 +8,7 @@
 
 using System;
 
-namespace Yojoy.Tech.U3d.Core.Editor
+namespace Yojoy.Tech.U3d.Core.Run
 {
     public interface IRecordLoader
     {

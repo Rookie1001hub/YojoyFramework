@@ -8,7 +8,7 @@
 
 using System;
 
-namespace Yojoy.Tech.U3d.Core.Editor
+namespace Yojoy.Tech.U3d.Core.Run
 {
     [AttributeUsage(validOn:AttributeTargets.Class)]
     public class RecordAttribute:Attribute

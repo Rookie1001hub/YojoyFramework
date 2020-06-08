@@ -21,6 +21,7 @@ namespace Yojoy.Tech.U3d.Core.Editor
         public void Handle()
         {
             YojoyEditorAgent.DispalyTip = UnityEditorUtility.DisplayTip;
+            YojoyEditorAgent.GetBeautifiedJson = JsonNetUtility.GetBeautifiedJson;
         }
     }
 }
