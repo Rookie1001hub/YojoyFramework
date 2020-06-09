@@ -1,8 +1,5 @@
 #region Comment Head
 
-// Author:        liuruoyu1981
-// CreateDate:    2020/1/12 16:07:41
-// Email:         xxxx@qq.com
 
 #endregion
 

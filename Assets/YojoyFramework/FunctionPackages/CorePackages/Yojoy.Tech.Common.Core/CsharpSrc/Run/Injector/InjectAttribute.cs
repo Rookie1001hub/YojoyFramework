@@ -12,7 +12,7 @@ using System;
 
 namespace Yojoy.Tech.Common.Core.Run
 {
-    [AttributeUsage(AttributeTargets.Class|AttributeTargets.Property)]
+    [AttributeUsage(AttributeTargets.Field|AttributeTargets.Property)]
     public class InjectAttribute:Attribute
     {
         

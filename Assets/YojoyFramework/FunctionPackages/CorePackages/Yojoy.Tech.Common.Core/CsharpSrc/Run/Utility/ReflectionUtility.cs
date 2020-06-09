@@ -57,6 +57,23 @@ namespace Yojoy.Tech.Common.Core.Run
             return instances;
         }
             
+
+        public static object InvokeMethod(object obj,string methodName,
+            object[]args)
+        {
+            var targetType = obj.GetType();
+            var methodInfos = targetType.GetMethods(BindingFlags.Instance |
+                BindingFlags.Public | BindingFlags.NonPublic).ToList();
+            var targetMethodInfo = methodInfos.Find(m => m.Name == methodName);
+            if (targetMethodInfo==null)
+            {
+                throw new Exception(
+                    $"Unable to find a method named {methodName}" +
+                    $"on the type {targetType.Name}!");
+            }
+            var result = targetMethodInfo.Invoke(obj, args);
+            return result;
+        }
     }
 }
 

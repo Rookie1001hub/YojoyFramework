@@ -19,14 +19,15 @@ namespace Yojoy.Tech.Common.Core.Run
         private Action<object> debugAction;
         private BuildFunc buildFuncs;
 
-        public void Bingding(Dictionary<Type,Type> typeMap
+        public void Binding(Dictionary<Type,Type> typeMap
             , Action<object> debugAction)
         {
             this.typeMap = typeMap;
             this.debugAction = debugAction;
         }
-        public void Binding(Dictionary<Type,Func<object>>buildFuncs
-            ,Action<object>debugAction)
+        public void Binding( Action<object> debugAction,
+            Dictionary<Type,Func<object>>buildFuncs
+            )
         {
             this.buildFuncs = buildFuncs;
             this.debugAction = debugAction;
