@@ -1,8 +1,5 @@
 #region Comment Head
 
-// Author:        LiuQian1992
-// CreateDate:    2020/6/9 11:47:45
-//Email:         854327817@qq.com
 
 #endregion
 
