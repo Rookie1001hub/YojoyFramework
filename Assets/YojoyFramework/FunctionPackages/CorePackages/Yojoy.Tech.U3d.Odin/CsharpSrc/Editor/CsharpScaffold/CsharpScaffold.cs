@@ -183,8 +183,9 @@ namespace Yojoy.Tech.U3d.Odin.Editor
             {
                 if (!copyRightContent.IsValid())
                     return;
-                scriptAppender.AppendLine(copyRightContent);
-                scriptAppender.AppendLine();
+                //scriptAppender.AppendLine(copyRightContent);
+                //scriptAppender.AppendLine();
+                scriptAppender.AppendMultiComment(copyRightContent);
             }
             #endregion
         }

@@ -11,6 +11,10 @@ namespace Yojoy.Tech.Common.Core.Editor
     {
         public void AppendSingleComment(string comment)
             => AppendLine($"//{comment}");
+        /// <summary>
+        /// 添加多行文字内容
+        /// </summary>
+        /// <param name="comments"></param>
         public void AppendMultiComment(params string[] comments)
         {
             AppendLine("/*");
