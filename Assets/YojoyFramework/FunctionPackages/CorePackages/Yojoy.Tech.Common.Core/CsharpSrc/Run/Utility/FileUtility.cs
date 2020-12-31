@@ -28,7 +28,7 @@ namespace Yojoy.Tech.Common.Core.Run
         public static void WriteAllText(string path,string content)
         {
             DirectoryUtility.EnsureDirectoryExist(path);
-            File.WriteAllText(path, content);
+            File.WriteAllText(path, content,encoding:System.Text.Encoding.UTF8);
         }
         public static void TryDelete(string path)
         {
