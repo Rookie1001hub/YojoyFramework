@@ -1,4 +1,4 @@
-﻿using Sirenix.OdinInspector;
+using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Policy;
@@ -14,7 +14,7 @@ using System.IO;
 namespace Yojoy.Tech.U3d.Odin.Editor
 {
     [System.Serializable]
-    public class CsharpScaffold:IOnActive
+    public class CsharpScaffold : IOnActive
     {
         #region Visualiztion
         public static string OutputDirectoryPrefsKey => UnityGlobalUtility
@@ -86,7 +86,7 @@ namespace Yojoy.Tech.U3d.Odin.Editor
         [LabelText("Require Add IfPrecompile",
             "是否需要添加if预编译指令")]
         [SerializeField]
-        private bool requireAddIfPrecompile = true;
+        private bool requireAddIfPrecompile = false;
 
         private void OnIfPrecompileChanged()
         {
@@ -131,6 +131,7 @@ namespace Yojoy.Tech.U3d.Odin.Editor
                     using (new IfPreCompileBlock(scriptAppender,
                         csharpCreateInfo.IfPreCompileInstructions))
                     {
+                        TryAddMonoUsing(csharpCreateInfo.CsharpScriptType);
                         using (new NameSpaceBlock(scriptAppender, globalNameSpace))
                         {
                             AppendScriptContent();
@@ -142,17 +143,19 @@ namespace Yojoy.Tech.U3d.Odin.Editor
             {
                 scriptAppender.AppendCommentHeader(developerInfo.Name,
                     developerInfo.Email);
+                TryAddMonoUsing(csharpCreateInfo.CsharpScriptType);
                 using (new NameSpaceBlock(scriptAppender, globalNameSpace))
                 {
                     AppendScriptContent();
                 }
             }
-            
+
             return scriptAppender.ToString();
 
             void AppendScriptContent()
             {
-                var clasaHeadString = string.Format("public {0} {1}",
+                var clasaHeadString = string.Format("public {0} {1}" +
+                    (csharpCreateInfo.CsharpScriptType == CsharpScriptType.MonoScript ? " : MonoBehaviour" : ""),
                     GetStringKeyword(csharpCreateInfo.CsharpScriptType),
                     csharpCreateInfo.ScriptName);
                 scriptAppender.AppendLine(clasaHeadString);
@@ -165,6 +168,7 @@ namespace Yojoy.Tech.U3d.Odin.Editor
                 switch (csharpScriptType)
                 {
                     case CsharpScriptType.Class:
+                    case CsharpScriptType.MonoScript:
                         return "class";
                     case CsharpScriptType.AbstractClass:
                         return "abstract class";
@@ -176,7 +180,7 @@ namespace Yojoy.Tech.U3d.Odin.Editor
                         return "struct";
                     default:
                         throw new ArgumentOutOfRangeException(
-                            nameof(csharpScriptType),csharpScriptType,null);
+                            nameof(csharpScriptType), csharpScriptType, null);
                 }
             }
             void TryAppendCopyRight()
@@ -186,6 +190,15 @@ namespace Yojoy.Tech.U3d.Odin.Editor
                 //scriptAppender.AppendLine(copyRightContent);
                 //scriptAppender.AppendLine();
                 scriptAppender.AppendMultiComment(copyRightContent);
+            }
+            void TryAddMonoUsing(CsharpScriptType csharpScriptType)
+            {
+                if (csharpScriptType == CsharpScriptType.MonoScript)
+                {
+                    scriptAppender.AppendLine();
+                    scriptAppender.AppendLine("using UnityEngine;");
+                    scriptAppender.AppendLine();
+                }
             }
             #endregion
         }
@@ -271,12 +284,12 @@ namespace Yojoy.Tech.U3d.Odin.Editor
                         "Script Name cannot be empty");
                     return true;
                 }
-                if (!globalNameSpace.IsValid())
-                {
-                    UnityEditorUtility.DisplayTip(
-                        "Global namespace cannot be empty");
-                    return true;
-                }
+                //if (!globalNameSpace.IsValid())
+                //{
+                //    UnityEditorUtility.DisplayTip(
+                //        "Global namespace cannot be empty");
+                //    return true;
+                //}
                 var finalPath = GetScriptOutPath(createInfo, outputDirectory);
                 if (File.Exists(finalPath))
                 {
@@ -311,8 +324,8 @@ namespace Yojoy.Tech.U3d.Odin.Editor
         //1.弹出目录选择窗口，开发者选择指定输出目录
         //2.直接使用当前脚本输出目录创建脚本
         #region Visual Invoke
-        [Button("Create script in selcet directory","选择" +
-            "目录创建脚本",ButtonSizes.Medium)]
+        [Button("Create script in selcet directory", "选择" +
+            "目录创建脚本", ButtonSizes.Medium)]
         private void CreateScriptInSelectDirectory()
         {
             var defaultDirectory = outputDirectory ?? Application.dataPath;
@@ -328,11 +341,11 @@ namespace Yojoy.Tech.U3d.Odin.Editor
             CreateScript();
         }
         [Button("Create script in output directory",
-            "在输出目录下创建脚本",ButtonSizes.Medium)]
+            "在输出目录下创建脚本", ButtonSizes.Medium)]
         private void CreateScriptOutputDirectory() => CreateScript();
 
         public void OnActive() => UpdateOutputDirectory();
-       
+
         #endregion
     }
 }
