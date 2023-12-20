@@ -6,12 +6,13 @@
 
 #endregion
 
+#if UNITY_EDITOR
 using Newtonsoft.Json;
 using System.IO;
 
 namespace Yojoy.Tech.U3d.Core.Editor
 {
-    public static  class JsonNetUtility
+    public static class JsonNetUtility
     {
         public static string GetBeautifiedJson(string jsonContent)
         {
@@ -33,3 +34,5 @@ namespace Yojoy.Tech.U3d.Core.Editor
         }
     }
 }
+#endif
+

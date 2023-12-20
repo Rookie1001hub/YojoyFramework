@@ -5,7 +5,7 @@
 //Email:         854327817@qq.com
 
 #endregion
-
+#if UNITY_EDITOR
 using UnityEditor;
 
 namespace Yojoy.Tech.U3d.Core.Editor
@@ -16,3 +16,6 @@ namespace Yojoy.Tech.U3d.Core.Editor
         void Handle();
     }
 }
+
+#endif
+

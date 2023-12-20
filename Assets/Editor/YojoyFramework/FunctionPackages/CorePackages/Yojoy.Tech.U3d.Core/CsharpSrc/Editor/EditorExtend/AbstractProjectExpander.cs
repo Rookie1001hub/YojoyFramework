@@ -5,7 +5,7 @@
 //Email:         854327817@qq.com
 
 #endregion
-
+#if UNITY_EDITOR
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -13,15 +13,15 @@ using Yojoy.Tech.Common.Core.Run;
 
 namespace Yojoy.Tech.U3d.Core.Editor
 {
-    public abstract class AbstractProjectExpander:IProjectExpander
+    public abstract class AbstractProjectExpander : IProjectExpander
     {
         protected string Guid { get; private set; }
         protected string Path { get; private set; }
 
         public abstract void Execute(Rect rect);
-        public void SaveContext(string guid,string path)
+        public void SaveContext(string guid, string path)
         {
-            Guid = guid;Path = path;
+            Guid = guid; Path = path;
         }
         public virtual bool CheckContext() => true;
         /// <summary>
@@ -60,3 +60,6 @@ namespace Yojoy.Tech.U3d.Core.Editor
 
     }
 }
+#endif
+
+

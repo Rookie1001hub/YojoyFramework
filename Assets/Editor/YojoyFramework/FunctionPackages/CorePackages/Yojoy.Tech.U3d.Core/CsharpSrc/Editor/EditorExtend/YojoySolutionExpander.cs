@@ -6,13 +6,14 @@
 
 #endregion
 
+#if UNITY_EDITOR
 using UnityEngine;
 using Yojoy.Tech.Common.Core.Run;
 using static Yojoy.Tech.Common.Core.Run.CommonGlobalUtility;
 
 namespace Yojoy.Tech.U3d.Core.Editor
 {
-    public class YojoySolutionExpander:AbstractProjectExpander
+    public class YojoySolutionExpander : AbstractProjectExpander
     {
         private readonly EditorIcon yojoyIcon;
 
@@ -60,3 +61,5 @@ namespace Yojoy.Tech.U3d.Core.Editor
         }
     }
 }
+
+#endif

@@ -6,6 +6,7 @@
 
 #endregion
 
+#if UNITY_EDITOR
 using System;
 using UnityEditor;
 
@@ -29,3 +30,5 @@ namespace Yojoy.Tech.U3d.Core.Editor
         void AddMenuItem(GenericMenu genericMenu, string path);
     }
 }
+#endif
+

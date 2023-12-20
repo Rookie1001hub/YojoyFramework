@@ -6,6 +6,7 @@
 
 #endregion
 
+#if UNITY_EDITOR
 using System;
 using System.Diagnostics;
 using UnityEditor;
@@ -44,3 +45,5 @@ namespace Yojoy.Tech.U3d.Core.Editor
         }
     }
 }
+
+#endif

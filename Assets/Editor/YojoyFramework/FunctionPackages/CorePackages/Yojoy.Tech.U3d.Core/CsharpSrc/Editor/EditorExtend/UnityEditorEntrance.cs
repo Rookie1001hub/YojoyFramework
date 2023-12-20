@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿#if UNITY_EDITOR
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
@@ -81,7 +82,7 @@ namespace Yojoy.Tech.U3d.Core.Editor
             {
                 var packageName = DirectoryUtility.GetDirectoryName(item);
                 //这边路径写对
-                var assemblyId = packageName +"."+ assemblyTypeId;
+                var assemblyId = packageName + "." + assemblyTypeId;
                 if (YojoyEditorSettings.IgnoreEditorAssemblyIds.Value.Contains(assemblyTypeId))
                 {
                     continue;
@@ -102,25 +103,25 @@ namespace Yojoy.Tech.U3d.Core.Editor
         private static readonly
             DelayInitializationProperty<StateChangeHandlerMap>
             stateChangeHandlersDelay = CreateDelayInitializationProperty(() =>
-              {
-                  var tempMap = new StateChangeHandlerMap();
-                  var handlers = ReflectionUtility.GetAllInstance
-                  <IEditorStateChangeHandler>(EditorAssemblyArrary.Value);
-                  foreach (var handler in handlers)
-                  {
-                      if (!tempMap.ContainsKey(handler.ConcernedStateChange))
-                      {
-                          tempMap.Add(handler.ConcernedStateChange,
-                              new List<IEditorStateChangeHandler>());
-                      }
-                      var targetHandlers = tempMap[handler.ConcernedStateChange];
-                      if (!targetHandlers.Contains(handler))
-                      {
-                          targetHandlers.Add(handler);
-                      }
-                  }
-                  return tempMap;
-              });
+            {
+                var tempMap = new StateChangeHandlerMap();
+                var handlers = ReflectionUtility.GetAllInstance
+                <IEditorStateChangeHandler>(EditorAssemblyArrary.Value);
+                foreach (var handler in handlers)
+                {
+                    if (!tempMap.ContainsKey(handler.ConcernedStateChange))
+                    {
+                        tempMap.Add(handler.ConcernedStateChange,
+                            new List<IEditorStateChangeHandler>());
+                    }
+                    var targetHandlers = tempMap[handler.ConcernedStateChange];
+                    if (!targetHandlers.Contains(handler))
+                    {
+                        targetHandlers.Add(handler);
+                    }
+                }
+                return tempMap;
+            });
 
         private static void OnPlayModeStateChanged(
             PlayModeStateChange playModeStateChange)
@@ -133,4 +134,6 @@ namespace Yojoy.Tech.U3d.Core.Editor
         #endregion
     }
 }
+#endif
+
 

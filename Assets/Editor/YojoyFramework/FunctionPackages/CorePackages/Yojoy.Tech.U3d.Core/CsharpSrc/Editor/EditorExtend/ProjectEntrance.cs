@@ -6,6 +6,7 @@
 
 #endregion
 
+#if UNITY_EDITOR
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -20,10 +21,10 @@ namespace Yojoy.Tech.U3d.Core.Editor
 
         public void Handle()
         {
-           EditorApplication.projectWindowItemOnGUI += ProjectWindowItemOnGUI;
+            EditorApplication.projectWindowItemOnGUI += ProjectWindowItemOnGUI;
         }
         private readonly DelayInitializationProperty<List<IProjectExpander>>
-            expanderDelay = CreateDelayInitializationProperty(() => 
+            expanderDelay = CreateDelayInitializationProperty(() =>
             {
                 var expanders = ReflectionUtility.GetAllInstance
                 <IProjectExpander>(UnityEditorEntrance.
@@ -35,7 +36,7 @@ namespace Yojoy.Tech.U3d.Core.Editor
             Rect selectionRect)
         {
             var path = AssetDatabase.GUIDToAssetPath(guid);
-           
+
             path = path.EnsureDirectoryFormat();
             foreach (var item in expanderDelay.Value)
             {
@@ -49,3 +50,5 @@ namespace Yojoy.Tech.U3d.Core.Editor
         }
     }
 }
+
+#endif
