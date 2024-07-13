@@ -12,6 +12,7 @@ namespace Yojoy.Tech.Common.Core.Run
         Interface,
         Enum,
         Struct,
-        MonoScript
+        MonoScript,
+        ScriptableObject,
     }
 }

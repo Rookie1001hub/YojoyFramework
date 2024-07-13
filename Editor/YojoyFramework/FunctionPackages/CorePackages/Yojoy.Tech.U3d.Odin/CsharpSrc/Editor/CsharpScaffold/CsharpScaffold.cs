@@ -154,8 +154,17 @@ namespace Yojoy.Tech.U3d.Odin.Editor
 
             void AppendScriptContent()
             {
-                var clasaHeadString = string.Format("public {0} {1}" +
-                    (csharpCreateInfo.CsharpScriptType == CsharpScriptType.MonoScript ? " : MonoBehaviour" : ""),
+                if (csharpCreateInfo.CsharpScriptType == CsharpScriptType.ScriptableObject)
+                {
+                    var createAssetMenuStr = $"[CreateAssetMenu(fileName = \"{csharpCreateInfo.ScriptName}\", menuName = \"YojoySampleScriptableObject/Create {csharpCreateInfo.ScriptName}\")]";
+                    scriptAppender.AppendLine(createAssetMenuStr);
+                }
+                string extendFromString = "";
+                if (csharpCreateInfo.CsharpScriptType == CsharpScriptType.MonoScript)
+                    extendFromString = " : MonoBehaviour";
+                else if (csharpCreateInfo.CsharpScriptType == CsharpScriptType.ScriptableObject)
+                    extendFromString = " : ScriptableObject";
+                var clasaHeadString = string.Format("public {0} {1}" + extendFromString,
                     GetStringKeyword(csharpCreateInfo.CsharpScriptType),
                     csharpCreateInfo.ScriptName);
                 scriptAppender.AppendLine(clasaHeadString);
@@ -169,6 +178,7 @@ namespace Yojoy.Tech.U3d.Odin.Editor
                 {
                     case CsharpScriptType.Class:
                     case CsharpScriptType.MonoScript:
+                    case CsharpScriptType.ScriptableObject:
                         return "class";
                     case CsharpScriptType.AbstractClass:
                         return "abstract class";
@@ -193,7 +203,7 @@ namespace Yojoy.Tech.U3d.Odin.Editor
             }
             void TryAddMonoUsing(CsharpScriptType csharpScriptType)
             {
-                if (csharpScriptType == CsharpScriptType.MonoScript)
+                if (csharpScriptType == CsharpScriptType.MonoScript || csharpScriptType == CsharpScriptType.ScriptableObject)
                 {
                     scriptAppender.AppendLine();
                     scriptAppender.AppendLine("using UnityEngine;");

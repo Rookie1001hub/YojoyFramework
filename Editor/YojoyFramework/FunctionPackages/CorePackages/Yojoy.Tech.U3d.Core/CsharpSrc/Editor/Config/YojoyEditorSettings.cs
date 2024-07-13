@@ -8,19 +8,26 @@ namespace Yojoy.Tech.U3d.Core.Editor
 {
     public static class YojoyEditorSettings
     {
-        //NOTE:这里可以自己定义
-        public static readonly string YojoyToolsFolder = "Editor";
+        //自定义目录 方便移植
+        public static string YojoyToolsFolder = "YojoyFramework/Editor";
 
-        public  static readonly string YojoyRootDirectoyId = "YojoyFramework";
+        public static string YojoyParentDirectoyId = "YojoyFramework";
 
-        public static readonly DelayInitializationProperty<string> YojoyDirectory =
-            CreateDelayInitializationProperty(() =>
-            Application.dataPath + $"/{YojoyToolsFolder}/{YojoyRootDirectoyId}/");
+        static YojoyFolderSettins yojoyFolderSettins;
+
+        static YojoyEditorSettings()
+        {
+            yojoyFolderSettins = Resources.Load<YojoyFolderSettins>("YojoyFolderSettins");
+            YojoyToolsFolder = yojoyFolderSettins.YojoyToolsFolder;
+            YojoyParentDirectoyId = yojoyFolderSettins.YojoyParentDirectoyId;
+        }
+
+
 
         public static readonly DelayInitializationProperty<string> PackageDirectory =
-            CreateDelayInitializationProperty(() => $"{YojoyDirectory.Value}FunctionPackages/");
+            CreateDelayInitializationProperty(() => $"{YojoyDirectory()}FunctionPackages/");
         public static readonly DelayInitializationProperty<string> CorePackagesDirectory =
-            CreateDelayInitializationProperty(()=>$"{PackageDirectory.Value}CorePackages/");
+            CreateDelayInitializationProperty(() => $"{PackageDirectory.Value}CorePackages/");
 
         public static readonly DelayInitializationProperty<string> ExtendPackagesDirectory =
             CreateDelayInitializationProperty(() => $"{PackageDirectory.Value}ExtendPackages/");
@@ -36,13 +43,18 @@ namespace Yojoy.Tech.U3d.Core.Editor
         public static readonly DelayInitializationProperty<string> AssetsConst =
             CreateDelayInitializationProperty(() => "Assets/");
         public static readonly DelayInitializationProperty<string> AssetsHeadConst =
-            CreateDelayInitializationProperty(() => $"Assets/{YojoyRootDirectoyId}/");
+            CreateDelayInitializationProperty(() => $"Assets/{YojoyParentDirectoyId}/");
         public static string GetModuleAssetsDirectory(string moduleId,
             string moduleType)
         {
             var directory = CorePackagesDirectory.Value
                             + $"{moduleId}/CsharpSrc/{moduleType}/Assets/";
             return directory;
+        }
+        static string YojoyDirectory()
+        {
+            return Application.dataPath + $"/{YojoyToolsFolder}" +
+            $"/{YojoyParentDirectoyId }/";
         }
     }
 

@@ -34,7 +34,7 @@ namespace Yojoy.Tech.U3d.Core.Editor
                 iconDirectory.Value,
                 "yojoy_common_icon");
             yojoyRootConstString =
-                "Assets/" + YojoyEditorSettings.YojoyToolsFolder+"/" + YojoyEditorSettings.YojoyRootDirectoyId;
+                "Assets/" + YojoyEditorSettings.YojoyToolsFolder+"/" + YojoyEditorSettings.YojoyParentDirectoyId;
         }
 
         public override bool CheckContext()
