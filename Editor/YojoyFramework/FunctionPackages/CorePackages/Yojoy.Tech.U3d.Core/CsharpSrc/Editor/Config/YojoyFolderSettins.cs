@@ -20,9 +20,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "YojoyFolderSettins", menuName = "YojoySampleScriptableObject/Create YojoyFolderSettins")]
 public class YojoyFolderSettins : ScriptableObject
 {
-    [Header("Yojoy工具所在文件夹")]
+    [Header("Yojoy工具所在文件夹,Yojoyu作为编辑器工具一般在Editor目录下")]
     public string YojoyToolsFolder ;
-    [Header("Yojoy工具的父级目录名称")]
+    [Header("Yojoy工具的目录名称")]
     public string YojoyParentDirectoyId ;
     
 }

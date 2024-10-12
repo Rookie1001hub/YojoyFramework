@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4f941ac7f14a1e409bd875dd110d738, type: 3}
   m_Name: YojoyFolderSettins
   m_EditorClassIdentifier: 
-  YojoyToolsFolder: YojoyFramework/Editor
+  YojoyToolsFolder: Editor
   YojoyParentDirectoyId: YojoyFramework
